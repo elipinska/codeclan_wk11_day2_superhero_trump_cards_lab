@@ -10,7 +10,7 @@ describe('Game', function() {
   beforeEach(function () {
     player1 = new Player('John');
     player2 = new Player('Anna');
-    deck = [new Card('Superman', 6, 9, 7), new Card('Scarlet Witch', 7, 10, 5), new Card('Black Widow', 8, 6, 9), new Card('The Flash', 7, 4, 10), new Card('Wonder Woman', 8, 7, 5), new Card('Batman', 10, 5, 6)];
+    deck = [new Card('Superman', 6, 9, 70), new Card('Scarlet Witch', 7, 10, 5), new Card('Black Widow', 8, 6, 90), new Card('The Flash', 7, 4, 10), new Card('Wonder Woman', 8, 7, 50), new Card('Batman', 10, 5, 6)];
     game = new Game(player1, player2, deck);
   });
 
@@ -35,10 +35,30 @@ describe('Game', function() {
     assert.strictEqual(actual, 3);
   });
 
-  it('should be able to calculate winner', function() {
-    game.dealCardsToPlayers();
-    const actual = game.calculateWinner('intelligence');
-    assert.deepStrictEqual(actual, player2);
-  });
+    it('should be able to conduct a turn', function() {
+      game.dealCardsToPlayers();
+      game.conductTurnAndReturnWinner('intelligence');
+      assert.strictEqual(player2.hand.length, 4);
+    });
+
+    it('should be able to calculate winner', function() {
+      game.dealCardsToPlayers();
+      const actual = game.calculateWinner(player1.playTopCard(), player2.playTopCard(), 'intelligence');
+      assert.deepStrictEqual(actual, player2);
+    });
+
+//playGame has an element of randomness in category selection, so the test below won't always pass
+    // it('should be able to play a full game', function() {
+    //   game.playGame();
+    //   assert.strictEqual(player2.hand.length, 6);
+    // });
+
+  // playGame has an element of randomness in category selection, so the test below won't always pass
+  // it('should return the winner at the end of the game', function() {
+  //   const actual = game.playGame();
+  //   assert.deepStrictEqual(actual, player2);
+  // })
+
+
 
 });

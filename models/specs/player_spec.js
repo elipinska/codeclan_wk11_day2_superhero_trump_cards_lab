@@ -34,4 +34,19 @@ describe('Player', function() {
     assert.strictEqual(player1.hand.length, 2);
   });
 
+  it('should be able to receive cards', function() {
+    const cards = [new Card('Wonder Woman', 8, 7, 5), new Card('Batman', 10, 5, 6)];
+    player1.receiveCards(cards);
+    const actual = player1.hand.length;
+    assert.strictEqual(actual, 2);
+  });
+
+  it('should be able to check if their hand is empty', function() {
+    const actual = player1.checkIfHandEmpty();
+    assert.strictEqual(actual, true);
+    game.dealCardsToPlayers();
+    const actual2 = player1.checkIfHandEmpty();
+    assert.strictEqual(actual2, false);
+  });
+
 });
